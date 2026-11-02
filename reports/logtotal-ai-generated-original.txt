@@ -1,0 +1,176 @@
+# Incident report — PHP2Shell\_sample-sanitized.jsonl
+
+## Incident report
+
+- **Report date:** 2 Nov 2026
+- **Severity:** Critical
+- **Source file:** PHP2Shell\_sample-sanitized.jsonl
+- **Analysis:** a\_01M6F2B0S64HQRE35758DXJ4SN
+- **Sanitized identifiers:** Yes
+- **Prepared by:** Architect
+
+> Prepared by Architect, SOC Prime's AI analyst, from the results of the LogTotal analysis. Verify the findings before acting on them.
+
+## Executive summary
+
+- **Verdict:** **Suspicious, needs investigation**
+- **Overall severity:** Critical
+- **Confidence:** Medium
+- **Furthest attack stage reached:** Exfiltration (TA0010)
+
+A potential compromise was detected on host `<HOST:d88a0d6ae8d69a57>` at 2026-10-22 11:31 UTC. The analysis indicates that the host may have been accessed via a PHP RCE vulnerability (CVE-2026-109618/109619), leading to a web shell deployment and a reverse shell to an external C2 server. The activity progressed to exfiltration over an encrypted non‑C2 protocol. The findings are suspicious and require investigation.
+
+**Top priority actions**
+
+- P1 Immediately isolate `<HOST:d88a0d6ae8d69a57>` from the network to prevent further exfiltration.
+- P1 Collect and preserve all logs from `<HOST:d88a0d6ae8d69a57>` around 2026-10-22 11:31 for forensic analysis.
+- P2 Verify the existence and content of the suspected web shell file on `<HOST:d88a0d6ae8d69a57>`.
+
+## Scope and data coverage
+
+- **File:** PHP2Shell\_sample-sanitized.jsonl
+- **SHA-256:** `0bcb261569108047c6cdcdf6a54eb716c1e1dcc4833f493dee539511ab7d5e61`
+- **Size:** 8.8 KB
+- **Log lines:** 6
+- **Processing time:** 4.2 s
+- **Log period:** 22 Oct 2026, 11:31 UTC — 22 Oct 2026, 11:31 UTC
+- **Log sources:** Not reported by the analysis
+- **Rules matched:** 10 of 58,352 checked
+- **Matched log lines:** 5 of 6
+- **Attack chains:** 1 formed: 1 reported
+- **Hosts with reported chains:** 1
+
+> Identifiers in this report are pseudonyms (for example &lt;HOST:…&gt;). The mapping file you downloaded with the sanitized logs restores the original values.
+
+> Visibility gaps cannot be assessed: the analysis does not report which log sources the file contained, so missing telemetry (for example network or proxy logs) can be neither confirmed nor excluded.
+
+## Attack chains and techniques
+
+- **Chain:** `PHP2Shell, Leaked Critical PHP Vulnerabilities (CVE-2026-109618 & CVE-2026-109619)`
+- **Severity:** Critical
+- **AI verdict / status:** Flagged by AI
+- **Match:** 100%
+- **Rules fired:** 4
+- **Primary host:** `<HOST:d88a0d6ae8d69a57>`
+- **Accounts:** —
+- **First / last seen:** 22 Oct 2026, 11:31 UTC — 22 Oct 2026, 11:31 UTC
+
+Activity is consistent with the active threat **Rapid Response: PHP2Shell, Leaked Critical PHP Vulnerabilities (CVE-2026-109618 & CVE-2026-109619)**.
+
+**Techniques**
+
+T1190 Exploit Public-Facing Application (Initial Access) · T1059.004 Command and Scripting Interpreter: Unix Shell (Execution) · T1505.003 Server Software Component: Web Shell (Persistence) · T1095 Non-Application Layer Protocol (Command and Control) · T1048.001 Exfiltration Over Alternative Protocol: Exfiltration Over Symmetric Encrypted Non-C2 Protocol (Exfiltration)
+
+The detection sequence indicates that host `<HOST:d88a0d6ae8d69a57>` was accessed via the CVE‑2026‑109618/109619 PHP RCE vulnerability, resulting in a PHP worker crash and the deployment of a web shell. The attacker then used a reverse shell over Bash to establish command and control, with data exfiltration occurring over an encrypted non‑C2 protocol. The chain aligns with the Rapid Response PHP2Shell playbook; confirmation would require evidence of the specific CVE exploitation and the presence of the web shell file.
+
+## Timeline
+
+| Timestamp (UTC) | Host | Activity | Technique | Evidence | Chain |
+|---|---|---|---|---|---|
+| 22 Oct 2026, 11:31 UTC | `<HOST:d88a0d6ae8d69a57>` | Earliest observed: Exploit public-facing PHP application via CVE-2026-109618/109619 | T1190 | `Possible CVE-2026-109618 / CVE-2026-109619 Exploitation Attempt - PHP Memory Exhaustion / PHP Worker Crash (via webserver error logs)`, `Possible PHP Worker Spawning Unusual Process (via cmdline)` | `PHP2Shell, Leaked Critical PHP Vulnerabilities (CVE-2026-109618 & CVE-2026-109619)` |
+| 22 Oct 2026, 11:31 UTC | `<HOST:d88a0d6ae8d69a57>` | Deploy web shell script on the server | T1505.003 | `Possible Web Shell Drop - PHP Script or Web Config File Written by PHP Web Worker [Linux] (via file_event)` | `PHP2Shell, Leaked Critical PHP Vulnerabilities (CVE-2026-109618 & CVE-2026-109619)` |
+| 22 Oct 2026, 11:31 UTC | `<HOST:d88a0d6ae8d69a57>` | Execute reverse shell through Bash | T1059.004 | `Possible Data Exfiltration / Reverse Shell via Bash (via cmdline)` | `PHP2Shell, Leaked Critical PHP Vulnerabilities (CVE-2026-109618 & CVE-2026-109619)` |
+| 22 Oct 2026, 11:31 UTC | `<HOST:d88a0d6ae8d69a57>` | Establish command and control channel | T1095 | `Possible Data Exfiltration / Reverse Shell via Bash (via cmdline)` | `PHP2Shell, Leaked Critical PHP Vulnerabilities (CVE-2026-109618 & CVE-2026-109619)` |
+| 22 Oct 2026, 11:31 UTC | `<HOST:d88a0d6ae8d69a57>` | Exfiltrate data over encrypted non‑C2 protocol | T1048.001 | `Possible Data Exfiltration / Reverse Shell via Bash (via cmdline)` | `PHP2Shell, Leaked Critical PHP Vulnerabilities (CVE-2026-109618 & CVE-2026-109619)` |
+
+> Times are UTC. The earliest observed event marks the start of what these logs show, not necessarily the initial compromise — the activity may predate the log period.
+
+## Affected entities
+
+| Entity | Type | Associated chains | Highest severity | Assessed status | First activity | Last activity |
+|---|---|---|---|---|---|---|
+| `<HOST:d88a0d6ae8d69a57>` | Host | `PHP2Shell, Leaked Critical PHP Vulnerabilities (CVE-2026-109618 & CVE-2026-109619)` | Critical | **Suspected** | 22 Oct 2026, 11:31 UTC | 22 Oct 2026, 11:31 UTC |
+
+> Assessed status: Compromised — an analyst confirmed a chain on it; Suspected — a high-severity chain awaits confirmation; Referenced only — it appears in the activity without a chain against it.
+
+## Additional findings outside attack chains
+
+- High-severity rule outside any chain: **Linux Reverse Shell Indicator** (Critical) — Critical rule match for Linux Reverse Shell Indicator (R1) suggests a potential remote control session, warranting immediate host isolation and forensic analysis.
+- High-severity rule outside any chain: **Possible Basic Reverse Shell via Bash or Netcat (via cmdline)** (High) — High severity match for Possible Basic Reverse Shell via Bash or Netcat (R3) indicates a simple but effective exfiltration channel, requiring investigation of command execution logs.
+- High-severity rule outside any chain: **Suspicious Reverse Shell Command Line** (High) — High severity Suspicious Reverse Shell Command Line (R4) points to malicious shell activity; verify the process origin and network connections for evidence of compromise.
+
+## Impact assessment
+
+**Observed impact**
+
+- A web shell was deployed on `<HOST:d88a0d6ae8d69a57>` via exploitation of CVE-2026-109618/109619, as indicated by `Possible Web Shell Drop - PHP Script or Web Config File Written by PHP Web Worker [Linux] (via file_event)` and `Possible CVE-2026-109618 / CVE-2026-109619 Exploitation Attempt - PHP Memory Exhaustion / PHP Worker Crash (via webserver error logs)` matches. A reverse shell was established over Bash, evidenced by `Possible Data Exfiltration / Reverse Shell via Bash (via cmdline)` and the presence of a Linux Reverse Shell Indicator `Linux Reverse Shell Indicator`. Data exfiltration over an encrypted non‑C2 protocol was detected, matching `Possible Data Exfiltration / Reverse Shell via Bash (via cmdline)` and T1048.001.
+
+**Potential impact**
+
+- If the attacker maintains the reverse shell, they could move laterally, exfiltrate additional data, or install further persistence mechanisms. The lack of observed ingress tool transfer suggests the attacker may next upload additional payloads or expand their foothold.
+
+**Unknowns**
+
+- The criticality of the data accessed through the web shell on `<HOST:d88a0d6ae8d69a57>` cannot be determined from these logs. The extent of lateral movement or additional persistence mechanisms is unknown. The exact external C2 server contacted by the reverse shell is not identified.
+
+## Open questions
+
+- Verify the presence of the web shell file on `<HOST:d88a0d6ae8d69a57>` How to answer: Check the filesystem for new PHP files or modified web config files and compare timestamps with the log entry.
+- Confirm the external C2 endpoint used by the reverse shell How to answer: Inspect network logs for outbound connections from `<HOST:d88a0d6ae8d69a57>` at 2026-10-22 11:31 and correlate with the reverse shell command line.
+- Determine if additional payloads were transferred after the initial exploitation How to answer: Search for file transfer logs or new binaries on `<HOST:d88a0d6ae8d69a57>` following the timestamp.
+- Assess whether the attacker achieved persistence beyond the web shell How to answer: Review scheduled tasks, cron jobs, or service configurations on `<HOST:d88a0d6ae8d69a57>` for persistence indicators.
+
+**Benign explanations considered**
+
+- A legitimate developer may have deployed a new PHP script that inadvertently triggered a worker crash. A system update or maintenance script could have spawned a Bash process resembling a reverse shell. Automated backup or monitoring tools might have logged a child process that matches the reverse shell pattern.
+
+## Recommended response
+
+**Contain**
+
+| Priority | Action | Target | Addresses |
+|---|---|---|---|
+| **P1** | Immediately isolate `<HOST:d88a0d6ae8d69a57>` from the network to prevent further exfiltration. | `<HOST:d88a0d6ae8d69a57>` | `PHP2Shell, Leaked Critical PHP Vulnerabilities (CVE-2026-109618 & CVE-2026-109619)` |
+
+**Investigate**
+
+| Priority | Action | Target | Addresses |
+|---|---|---|---|
+| **P1** | Collect and preserve all logs from `<HOST:d88a0d6ae8d69a57>` around 2026-10-22 11:31 for forensic analysis. | `<HOST:d88a0d6ae8d69a57>` | `PHP2Shell, Leaked Critical PHP Vulnerabilities (CVE-2026-109618 & CVE-2026-109619)` |
+| **P2** | Verify the existence and content of the suspected web shell file on `<HOST:d88a0d6ae8d69a57>`. | `<HOST:d88a0d6ae8d69a57>` | `Linux Reverse Shell Indicator` |
+| **P2** | Identify the external C2 server contacted by the reverse shell on `<HOST:d88a0d6ae8d69a57>`. | `<HOST:d88a0d6ae8d69a57>` | `Linux Reverse Shell Indicator` |
+
+**Eradicate and recover**
+
+| Priority | Action | Target | Addresses |
+|---|---|---|---|
+| **P2** | Remove the web shell file and any related configuration changes from `<HOST:d88a0d6ae8d69a57>`. | `<HOST:d88a0d6ae8d69a57>` | `Linux Reverse Shell Indicator` |
+| **P2** | Reboot `<HOST:d88a0d6ae8d69a57>` to terminate any lingering reverse shell processes. | `<HOST:d88a0d6ae8d69a57>` | `Linux Reverse Shell Indicator` |
+
+**Harden and improve detection**
+
+| Priority | Action | Target | Addresses |
+|---|---|---|---|
+| **P3** | Apply the latest PHP security patches to `<HOST:d88a0d6ae8d69a57>` as per the mitigation guidance. | `<HOST:d88a0d6ae8d69a57>` | `PHP2Shell, Leaked Critical PHP Vulnerabilities (CVE-2026-109618 & CVE-2026-109619)` |
+| **P3** | Enable detailed logging of PHP worker child processes on `<HOST:d88a0d6ae8d69a57>` to detect future anomalies. | `<HOST:d88a0d6ae8d69a57>` | `PHP2Shell, Leaked Critical PHP Vulnerabilities (CVE-2026-109618 & CVE-2026-109619)` |
+
+## Appendix
+
+**ATT&CK summary**
+
+| Technique | Name | Tactic | Chains | Rules |
+|---|---|---|---|---|
+| T1190 | Exploit Public-Facing Application | Initial Access | `PHP2Shell, Leaked Critical PHP Vulnerabilities (CVE-2026-109618 & CVE-2026-109619)` | 2 |
+| T1059.004 | Command and Scripting Interpreter: Unix Shell | Execution | `PHP2Shell, Leaked Critical PHP Vulnerabilities (CVE-2026-109618 & CVE-2026-109619)` | 1 |
+| T1505.003 | Server Software Component: Web Shell | Persistence | `PHP2Shell, Leaked Critical PHP Vulnerabilities (CVE-2026-109618 & CVE-2026-109619)` | 1 |
+| T1095 | Non-Application Layer Protocol | Command and Control | `PHP2Shell, Leaked Critical PHP Vulnerabilities (CVE-2026-109618 & CVE-2026-109619)` | 1 |
+| T1048.001 | Exfiltration Over Alternative Protocol: Exfiltration Over Symmetric Encrypted Non-C2 Protocol | Exfiltration | `PHP2Shell, Leaked Critical PHP Vulnerabilities (CVE-2026-109618 & CVE-2026-109619)` | 1 |
+
+**Fired rules (top 10 of 10 by severity and hits)**
+
+| Rule | Severity | Author | Hits | First / last seen |
+|---|---|---|---|---|
+| `Linux Reverse Shell Indicator` | Critical | SigmaHQ/sigma | 1 | 22 Oct 2026, 11:31 UTC |
+| `Possible Data Exfiltration / Reverse Shell via Bash (via cmdline)` | High | SOC Prime | 1 | 22 Oct 2026, 11:31 UTC |
+| `Possible Basic Reverse Shell via Bash or Netcat (via cmdline)` | High | SOC Prime | 1 | 22 Oct 2026, 11:31 UTC |
+| `Suspicious Reverse Shell Command Line` | High | SigmaHQ/sigma | 1 | 22 Oct 2026, 11:31 UTC |
+| `Possible CVE-2026-109618 / CVE-2026-109619 Exploitation Attempt - PHP Memory Exhaustion / PHP Worker Crash (via webserver error logs)` | Medium | SOC Prime | 2 | 22 Oct 2026, 11:31 UTC |
+| `Possible PHP Worker Spawning Unusual Process (via cmdline)` | Medium | SOC Prime | 1 | 22 Oct 2026, 11:31 UTC |
+| `Possible Web Shell Drop - PHP Script or Web Config File Written by PHP Web Worker [Linux] (via file_event)` | Medium | SOC Prime | 1 | 22 Oct 2026, 11:31 UTC |
+| `Scripted File was Created in Suspicious Webserver Directories [Linux] (via file_event)` | Medium | SOC Prime | 1 | 22 Oct 2026, 11:31 UTC |
+| `Suspicious Use of /dev/tcp` | Medium | SigmaHQ/sigma | 1 | 22 Oct 2026, 11:31 UTC |
+| `Bash Interactive Shell` | Low | SigmaHQ/sigma | 1 | 22 Oct 2026, 11:31 UTC |
+
+**Methodology**
+
+LogTotal matches every event in the file against detection rules, correlates the matches into attack chains through Higher Order Sigma patterns, and has an AI agent verify each chain. This report is written from those results; statements about activity rest on rule matches, not on manual review.

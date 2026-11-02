@@ -106,6 +106,15 @@ An automated LogTotal investigation reported a critical PHP2Shell attack chain a
 - [Google Cloud — Responding to PHP CVE-2026-109618 / 109619](https://cloud.google.com/blog/products/identity-security/responding-to-core-php-vulnerabilities-cve-2026-109618-cve-2026-109619/)
 - [MITRE ATT&CK](https://attack.mitre.org/)
 
+
+## 🛠️ Tools & References
+
+- **[SOC Prime LogTotal](https://logtotal.com/)** — Log analysis and attack-chain correlation.
+- **[Microsoft Defender for Endpoint](https://learn.microsoft.com/en-us/defender-endpoint/)** — Endpoint security telemetry and process investigation.
+- **[Sigma Detection Rules](https://github.com/SigmaHQ/sigma)** — Detection rules for suspicious behavior.
+- **[MITRE ATT&CK](https://attack.mitre.org/)** — Adversary behavior and technique mapping.
+
+*Investigation based on simulated, sanitized security logs.*
 ## Skills demonstrated
 
 SOC alert triage · Linux process lineage · EDR telemetry · Web shell indicators · Reverse shell detection · IOC documentation · MITRE ATT&CK mapping · Evidence validation · L1-to-L2 handoff · Cyber Threat Intelligence
@@ -114,8 +123,4 @@ SOC alert triage · Linux process lineage · EDR telemetry · Web shell indicato
 **Author:** Munif Alomisi  
 **Focus:** SOC Analyst L1 / Cyber Threat Intelligence / DFIR  
 **LinkedIn:** https://www.linkedin.com/in/munif-alomisi/  
-**GitHub:** https://github.com/munifaomisi
-
-**Author:** Munif Alomisi  
-**LinkedIn:** https://www.linkedin.com/in/munif-alomisi  
 **GitHub:** https://github.com/munifaomisi
